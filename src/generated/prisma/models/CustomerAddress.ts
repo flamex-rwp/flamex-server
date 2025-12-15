@@ -42,6 +42,7 @@ export type CustomerAddressMinAggregateOutputType = {
   address: string | null
   isDefault: boolean | null
   notes: string | null
+  googleMapsLink: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +53,7 @@ export type CustomerAddressMaxAggregateOutputType = {
   address: string | null
   isDefault: boolean | null
   notes: string | null
+  googleMapsLink: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +64,7 @@ export type CustomerAddressCountAggregateOutputType = {
   address: number
   isDefault: number
   notes: number
+  googleMapsLink: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -84,6 +87,7 @@ export type CustomerAddressMinAggregateInputType = {
   address?: true
   isDefault?: true
   notes?: true
+  googleMapsLink?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +98,7 @@ export type CustomerAddressMaxAggregateInputType = {
   address?: true
   isDefault?: true
   notes?: true
+  googleMapsLink?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -104,6 +109,7 @@ export type CustomerAddressCountAggregateInputType = {
   address?: true
   isDefault?: true
   notes?: true
+  googleMapsLink?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -201,6 +207,7 @@ export type CustomerAddressGroupByOutputType = {
   address: string
   isDefault: boolean
   notes: string | null
+  googleMapsLink: string | null
   createdAt: Date
   updatedAt: Date
   _count: CustomerAddressCountAggregateOutputType | null
@@ -234,6 +241,7 @@ export type CustomerAddressWhereInput = {
   address?: Prisma.StringFilter<"CustomerAddress"> | string
   isDefault?: Prisma.BoolFilter<"CustomerAddress"> | boolean
   notes?: Prisma.StringNullableFilter<"CustomerAddress"> | string | null
+  googleMapsLink?: Prisma.StringNullableFilter<"CustomerAddress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CustomerAddress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CustomerAddress"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -245,6 +253,7 @@ export type CustomerAddressOrderByWithRelationInput = {
   address?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   customer?: Prisma.CustomerOrderByWithRelationInput
@@ -260,6 +269,7 @@ export type CustomerAddressWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringFilter<"CustomerAddress"> | string
   isDefault?: Prisma.BoolFilter<"CustomerAddress"> | boolean
   notes?: Prisma.StringNullableFilter<"CustomerAddress"> | string | null
+  googleMapsLink?: Prisma.StringNullableFilter<"CustomerAddress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CustomerAddress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CustomerAddress"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -271,6 +281,7 @@ export type CustomerAddressOrderByWithAggregationInput = {
   address?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CustomerAddressCountOrderByAggregateInput
@@ -289,6 +300,7 @@ export type CustomerAddressScalarWhereWithAggregatesInput = {
   address?: Prisma.StringWithAggregatesFilter<"CustomerAddress"> | string
   isDefault?: Prisma.BoolWithAggregatesFilter<"CustomerAddress"> | boolean
   notes?: Prisma.StringNullableWithAggregatesFilter<"CustomerAddress"> | string | null
+  googleMapsLink?: Prisma.StringNullableWithAggregatesFilter<"CustomerAddress"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CustomerAddress"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CustomerAddress"> | Date | string
 }
@@ -297,6 +309,7 @@ export type CustomerAddressCreateInput = {
   address: string
   isDefault?: boolean
   notes?: string | null
+  googleMapsLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutAddressesInput
@@ -308,6 +321,7 @@ export type CustomerAddressUncheckedCreateInput = {
   address: string
   isDefault?: boolean
   notes?: string | null
+  googleMapsLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -316,6 +330,7 @@ export type CustomerAddressUpdateInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutAddressesNestedInput
@@ -327,6 +342,7 @@ export type CustomerAddressUncheckedUpdateInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -337,6 +353,7 @@ export type CustomerAddressCreateManyInput = {
   address: string
   isDefault?: boolean
   notes?: string | null
+  googleMapsLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -345,6 +362,7 @@ export type CustomerAddressUpdateManyMutationInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -355,6 +373,7 @@ export type CustomerAddressUncheckedUpdateManyInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -380,6 +399,7 @@ export type CustomerAddressCountOrderByAggregateInput = {
   address?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -395,6 +415,7 @@ export type CustomerAddressMaxOrderByAggregateInput = {
   address?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -405,6 +426,7 @@ export type CustomerAddressMinOrderByAggregateInput = {
   address?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -460,6 +482,7 @@ export type CustomerAddressCreateWithoutCustomerInput = {
   address: string
   isDefault?: boolean
   notes?: string | null
+  googleMapsLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -469,6 +492,7 @@ export type CustomerAddressUncheckedCreateWithoutCustomerInput = {
   address: string
   isDefault?: boolean
   notes?: string | null
+  googleMapsLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -508,6 +532,7 @@ export type CustomerAddressScalarWhereInput = {
   address?: Prisma.StringFilter<"CustomerAddress"> | string
   isDefault?: Prisma.BoolFilter<"CustomerAddress"> | boolean
   notes?: Prisma.StringNullableFilter<"CustomerAddress"> | string | null
+  googleMapsLink?: Prisma.StringNullableFilter<"CustomerAddress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CustomerAddress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CustomerAddress"> | Date | string
 }
@@ -517,6 +542,7 @@ export type CustomerAddressCreateManyCustomerInput = {
   address: string
   isDefault?: boolean
   notes?: string | null
+  googleMapsLink?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -525,6 +551,7 @@ export type CustomerAddressUpdateWithoutCustomerInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -534,6 +561,7 @@ export type CustomerAddressUncheckedUpdateWithoutCustomerInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -543,6 +571,7 @@ export type CustomerAddressUncheckedUpdateManyWithoutCustomerInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -555,6 +584,7 @@ export type CustomerAddressSelect<ExtArgs extends runtime.Types.Extensions.Inter
   address?: boolean
   isDefault?: boolean
   notes?: boolean
+  googleMapsLink?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -566,6 +596,7 @@ export type CustomerAddressSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   address?: boolean
   isDefault?: boolean
   notes?: boolean
+  googleMapsLink?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -577,6 +608,7 @@ export type CustomerAddressSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   address?: boolean
   isDefault?: boolean
   notes?: boolean
+  googleMapsLink?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -588,11 +620,12 @@ export type CustomerAddressSelectScalar = {
   address?: boolean
   isDefault?: boolean
   notes?: boolean
+  googleMapsLink?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CustomerAddressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "address" | "isDefault" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["customerAddress"]>
+export type CustomerAddressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "address" | "isDefault" | "notes" | "googleMapsLink" | "createdAt" | "updatedAt", ExtArgs["result"]["customerAddress"]>
 export type CustomerAddressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
 }
@@ -614,6 +647,7 @@ export type $CustomerAddressPayload<ExtArgs extends runtime.Types.Extensions.Int
     address: string
     isDefault: boolean
     notes: string | null
+    googleMapsLink: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["customerAddress"]>
@@ -1045,6 +1079,7 @@ export interface CustomerAddressFieldRefs {
   readonly address: Prisma.FieldRef<"CustomerAddress", 'String'>
   readonly isDefault: Prisma.FieldRef<"CustomerAddress", 'Boolean'>
   readonly notes: Prisma.FieldRef<"CustomerAddress", 'String'>
+  readonly googleMapsLink: Prisma.FieldRef<"CustomerAddress", 'String'>
   readonly createdAt: Prisma.FieldRef<"CustomerAddress", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CustomerAddress", 'DateTime'>
 }

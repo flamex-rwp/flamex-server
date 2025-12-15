@@ -98,7 +98,7 @@ model Order {
   orderType           OrderType       @default(dine_in) @map("order_type")
   orderStatus         OrderStatus     @default(pending) @map("order_status")
   paymentStatus       PaymentStatus   @default(completed) @map("payment_status")
-  tableNumber         Int?            @map("table_number")
+  tableNumber         String?         @map("table_number")
   orderNumber         Int?            @map("order_number")
   customerId          Int?            @map("customer_id")
   riderId             Int?            @map("rider_id")
@@ -214,13 +214,14 @@ model Customer {
 }
 
 model CustomerAddress {
-  id         Int      @id @default(autoincrement())
-  customerId Int      @map("customer_id")
-  address    String   @db.Text
-  isDefault  Boolean  @default(false) @map("is_default")
-  notes      String?  @db.Text
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id            Int      @id @default(autoincrement())
+  customerId    Int      @map("customer_id")
+  address       String   @db.Text
+  isDefault     Boolean  @default(false) @map("is_default")
+  notes         String?  @db.Text
+  googleMapsLink String? @map("google_maps_link") @db.VarChar(500)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   // Relations
   customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)

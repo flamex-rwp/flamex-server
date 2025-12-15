@@ -224,7 +224,7 @@ export class OrdersRepository {
     if (search) {
       where.OR = [
         { orderNumber: { equals: parseInt(search) || 0 } },
-        { tableNumber: { equals: parseInt(search) || 0 } },
+        { tableNumber: { contains: search, mode: 'insensitive' } },
         {
           customer: {
             OR: [

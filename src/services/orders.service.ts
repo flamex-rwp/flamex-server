@@ -75,11 +75,11 @@ export class OrdersService {
       orderData.returnAmount = null;
     }
 
-    // Check table availability for dine-in
-    if (orderType === 'dine_in' && tableNumber) {
+    // Check table availability for dine-in (skip check for "takeaway")
+    if (orderType === 'dine_in' && tableNumber && tableNumber !== 'takeaway') {
       const occupiedTables = await OrdersRepository.getTableAvailability();
       const isTableOccupied = occupiedTables.some(
-        (table) => table.tableNumber === tableNumber,
+        (table) => String(table.tableNumber) === String(tableNumber),
       );
       if (isTableOccupied) {
         throw new ApiError(400, `Table #${tableNumber} is already occupied`);

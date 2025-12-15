@@ -1399,6 +1399,7 @@ export const CustomerAddressScalarFieldEnum = {
   address: 'address',
   isDefault: 'isDefault',
   notes: 'notes',
+  googleMapsLink: 'googleMapsLink',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
