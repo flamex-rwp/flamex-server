@@ -20,6 +20,7 @@ export class OrdersService {
       customerId,
       deliveryAddress,
       deliveryNotes,
+      googleMapsLink,
       deliveryCharge,
       paymentStatus,
       specialInstructions,
@@ -50,6 +51,7 @@ export class OrdersService {
       deliveryCharge: deliveryCharge || 0,
       deliveryAddress,
       deliveryNotes,
+      googleMapsLink: googleMapsLink || null,
       specialInstructions,
       tableNumber: tableNumber !== undefined && tableNumber !== null ? String(tableNumber) : null,
       cashierName: 'Cashier', // Will be updated from session

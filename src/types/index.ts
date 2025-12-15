@@ -31,6 +31,7 @@ export interface CreateOrderInput {
   customerId?: number;
   deliveryAddress?: string;
   deliveryNotes?: string;
+  googleMapsLink?: string;
   deliveryCharge?: number;
   paymentStatus?: PaymentStatus;
   specialInstructions?: string;

@@ -32,7 +32,16 @@ export class OrdersRepository {
               menuItem: true
             }
           },
-          customer: true,
+          customer: {
+            include: {
+              addresses: {
+                orderBy: [
+                  { isDefault: 'desc' },
+                  { createdAt: 'asc' }
+                ]
+              }
+            }
+          },
           rider: true
         }
       });
@@ -55,7 +64,16 @@ export class OrdersRepository {
     return await prisma.order.findUnique({
       where: { id },
       include: {
-        customer: true,
+        customer: {
+          include: {
+            addresses: {
+              orderBy: [
+                { isDefault: 'desc' },
+                { createdAt: 'asc' }
+              ]
+            }
+          }
+        },
         rider: true,
         orderItems: {
           include: {
@@ -76,7 +94,16 @@ export class OrdersRepository {
             menuItem: true
           }
         },
-        customer: true,
+        customer: {
+          include: {
+            addresses: {
+              orderBy: [
+                { isDefault: 'desc' },
+                { createdAt: 'asc' }
+              ]
+            }
+          }
+        },
         rider: true
       }
     });
@@ -114,7 +141,16 @@ export class OrdersRepository {
                 menuItem: true
               }
             },
-            customer: true,
+            customer: {
+              include: {
+                addresses: {
+                  orderBy: [
+                    { isDefault: 'desc' },
+                    { createdAt: 'asc' }
+                  ]
+                }
+              }
+            },
             rider: true
           }
         });
@@ -129,7 +165,16 @@ export class OrdersRepository {
                 menuItem: true
               }
             },
-            customer: true,
+            customer: {
+              include: {
+                addresses: {
+                  orderBy: [
+                    { isDefault: 'desc' },
+                    { createdAt: 'asc' }
+                  ]
+                }
+              }
+            },
             rider: true
           }
         });
@@ -298,7 +343,16 @@ export class OrdersRepository {
       prisma.order.findMany({
         where,
         include: {
-          customer: true,
+          customer: {
+            include: {
+              addresses: {
+                orderBy: [
+                  { isDefault: 'desc' },
+                  { createdAt: 'asc' }
+                ]
+              }
+            }
+          },
           rider: true,
           orderItems: {
             include: {
@@ -400,7 +454,16 @@ export class OrdersRepository {
     return await prisma.order.findMany({
       where,
       include: {
-        customer: true,
+        customer: {
+          include: {
+            addresses: {
+              orderBy: [
+                { isDefault: 'desc' },
+                { createdAt: 'asc' }
+              ]
+            }
+          }
+        },
         rider: true,
         orderItems: {
           include: {

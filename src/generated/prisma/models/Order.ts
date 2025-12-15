@@ -71,6 +71,7 @@ export type OrderMinAggregateOutputType = {
   deliveryCharge: runtime.Decimal | null
   deliveryAddress: string | null
   deliveryNotes: string | null
+  googleMapsLink: string | null
   deliveryStatus: $Enums.DeliveryStatus | null
   specialInstructions: string | null
   cashierName: string | null
@@ -99,6 +100,7 @@ export type OrderMaxAggregateOutputType = {
   deliveryCharge: runtime.Decimal | null
   deliveryAddress: string | null
   deliveryNotes: string | null
+  googleMapsLink: string | null
   deliveryStatus: $Enums.DeliveryStatus | null
   specialInstructions: string | null
   cashierName: string | null
@@ -127,6 +129,7 @@ export type OrderCountAggregateOutputType = {
   deliveryCharge: number
   deliveryAddress: number
   deliveryNotes: number
+  googleMapsLink: number
   deliveryStatus: number
   specialInstructions: number
   cashierName: number
@@ -183,6 +186,7 @@ export type OrderMinAggregateInputType = {
   deliveryCharge?: true
   deliveryAddress?: true
   deliveryNotes?: true
+  googleMapsLink?: true
   deliveryStatus?: true
   specialInstructions?: true
   cashierName?: true
@@ -211,6 +215,7 @@ export type OrderMaxAggregateInputType = {
   deliveryCharge?: true
   deliveryAddress?: true
   deliveryNotes?: true
+  googleMapsLink?: true
   deliveryStatus?: true
   specialInstructions?: true
   cashierName?: true
@@ -239,6 +244,7 @@ export type OrderCountAggregateInputType = {
   deliveryCharge?: true
   deliveryAddress?: true
   deliveryNotes?: true
+  googleMapsLink?: true
   deliveryStatus?: true
   specialInstructions?: true
   cashierName?: true
@@ -354,6 +360,7 @@ export type OrderGroupByOutputType = {
   deliveryCharge: runtime.Decimal
   deliveryAddress: string | null
   deliveryNotes: string | null
+  googleMapsLink: string | null
   deliveryStatus: $Enums.DeliveryStatus | null
   specialInstructions: string | null
   cashierName: string
@@ -405,6 +412,7 @@ export type OrderWhereInput = {
   deliveryCharge?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryNotes?: Prisma.StringNullableFilter<"Order"> | string | null
+  googleMapsLink?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryStatus?: Prisma.EnumDeliveryStatusNullableFilter<"Order"> | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.StringNullableFilter<"Order"> | string | null
   cashierName?: Prisma.StringFilter<"Order"> | string
@@ -437,6 +445,7 @@ export type OrderOrderByWithRelationInput = {
   deliveryCharge?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   specialInstructions?: Prisma.SortOrderInput | Prisma.SortOrder
   cashierName?: Prisma.SortOrder
@@ -472,6 +481,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   deliveryCharge?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryNotes?: Prisma.StringNullableFilter<"Order"> | string | null
+  googleMapsLink?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryStatus?: Prisma.EnumDeliveryStatusNullableFilter<"Order"> | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.StringNullableFilter<"Order"> | string | null
   cashierName?: Prisma.StringFilter<"Order"> | string
@@ -504,6 +514,7 @@ export type OrderOrderByWithAggregationInput = {
   deliveryCharge?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   specialInstructions?: Prisma.SortOrderInput | Prisma.SortOrder
   cashierName?: Prisma.SortOrder
@@ -540,6 +551,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   deliveryCharge?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   deliveryNotes?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  googleMapsLink?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   deliveryStatus?: Prisma.EnumDeliveryStatusNullableWithAggregatesFilter<"Order"> | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   cashierName?: Prisma.StringWithAggregatesFilter<"Order"> | string
@@ -565,6 +577,7 @@ export type OrderCreateInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -597,6 +610,7 @@ export type OrderUncheckedCreateInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -624,6 +638,7 @@ export type OrderUpdateInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -656,6 +671,7 @@ export type OrderUncheckedUpdateInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -686,6 +702,7 @@ export type OrderCreateManyInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -711,6 +728,7 @@ export type OrderUpdateManyMutationInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -739,6 +757,7 @@ export type OrderUncheckedUpdateManyInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -767,6 +786,7 @@ export type OrderCountOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrder
   deliveryNotes?: Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrder
   specialInstructions?: Prisma.SortOrder
   cashierName?: Prisma.SortOrder
@@ -808,6 +828,7 @@ export type OrderMaxOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrder
   deliveryNotes?: Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrder
   specialInstructions?: Prisma.SortOrder
   cashierName?: Prisma.SortOrder
@@ -836,6 +857,7 @@ export type OrderMinOrderByAggregateInput = {
   deliveryCharge?: Prisma.SortOrder
   deliveryAddress?: Prisma.SortOrder
   deliveryNotes?: Prisma.SortOrder
+  googleMapsLink?: Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrder
   specialInstructions?: Prisma.SortOrder
   cashierName?: Prisma.SortOrder
@@ -1029,6 +1051,7 @@ export type OrderCreateWithoutOrderItemsInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1060,6 +1083,7 @@ export type OrderUncheckedCreateWithoutOrderItemsInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1102,6 +1126,7 @@ export type OrderUpdateWithoutOrderItemsInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1133,6 +1158,7 @@ export type OrderUncheckedUpdateWithoutOrderItemsInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1159,6 +1185,7 @@ export type OrderCreateWithoutCustomerInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1189,6 +1216,7 @@ export type OrderUncheckedCreateWithoutCustomerInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1248,6 +1276,7 @@ export type OrderScalarWhereInput = {
   deliveryCharge?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryNotes?: Prisma.StringNullableFilter<"Order"> | string | null
+  googleMapsLink?: Prisma.StringNullableFilter<"Order"> | string | null
   deliveryStatus?: Prisma.EnumDeliveryStatusNullableFilter<"Order"> | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.StringNullableFilter<"Order"> | string | null
   cashierName?: Prisma.StringFilter<"Order"> | string
@@ -1273,6 +1302,7 @@ export type OrderCreateWithoutRiderInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1303,6 +1333,7 @@ export type OrderUncheckedCreateWithoutRiderInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1356,6 +1387,7 @@ export type OrderCreateWithoutOrderEditHistoryInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1387,6 +1419,7 @@ export type OrderUncheckedCreateWithoutOrderEditHistoryInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1429,6 +1462,7 @@ export type OrderUpdateWithoutOrderEditHistoryInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1460,6 +1494,7 @@ export type OrderUncheckedUpdateWithoutOrderEditHistoryInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1488,6 +1523,7 @@ export type OrderCreateManyCustomerInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1513,6 +1549,7 @@ export type OrderUpdateWithoutCustomerInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1543,6 +1580,7 @@ export type OrderUncheckedUpdateWithoutCustomerInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1572,6 +1610,7 @@ export type OrderUncheckedUpdateManyWithoutCustomerInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1599,6 +1638,7 @@ export type OrderCreateManyRiderInput = {
   deliveryCharge?: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: string | null
   deliveryNotes?: string | null
+  googleMapsLink?: string | null
   deliveryStatus?: $Enums.DeliveryStatus | null
   specialInstructions?: string | null
   cashierName?: string
@@ -1624,6 +1664,7 @@ export type OrderUpdateWithoutRiderInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1654,6 +1695,7 @@ export type OrderUncheckedUpdateWithoutRiderInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1683,6 +1725,7 @@ export type OrderUncheckedUpdateManyWithoutRiderInput = {
   deliveryCharge?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleMapsLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryStatus?: Prisma.NullableEnumDeliveryStatusFieldUpdateOperationsInput | $Enums.DeliveryStatus | null
   specialInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashierName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1751,6 +1794,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   deliveryCharge?: boolean
   deliveryAddress?: boolean
   deliveryNotes?: boolean
+  googleMapsLink?: boolean
   deliveryStatus?: boolean
   specialInstructions?: boolean
   cashierName?: boolean
@@ -1784,6 +1828,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   deliveryCharge?: boolean
   deliveryAddress?: boolean
   deliveryNotes?: boolean
+  googleMapsLink?: boolean
   deliveryStatus?: boolean
   specialInstructions?: boolean
   cashierName?: boolean
@@ -1814,6 +1859,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   deliveryCharge?: boolean
   deliveryAddress?: boolean
   deliveryNotes?: boolean
+  googleMapsLink?: boolean
   deliveryStatus?: boolean
   specialInstructions?: boolean
   cashierName?: boolean
@@ -1844,6 +1890,7 @@ export type OrderSelectScalar = {
   deliveryCharge?: boolean
   deliveryAddress?: boolean
   deliveryNotes?: boolean
+  googleMapsLink?: boolean
   deliveryStatus?: boolean
   specialInstructions?: boolean
   cashierName?: boolean
@@ -1853,7 +1900,7 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "totalAmount" | "subtotal" | "discountPercent" | "paymentMethod" | "amountTaken" | "returnAmount" | "status" | "orderType" | "orderStatus" | "paymentStatus" | "tableNumber" | "orderNumber" | "customerId" | "riderId" | "deliveryCharge" | "deliveryAddress" | "deliveryNotes" | "deliveryStatus" | "specialInstructions" | "cashierName" | "assignedAt" | "deliveredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "totalAmount" | "subtotal" | "discountPercent" | "paymentMethod" | "amountTaken" | "returnAmount" | "status" | "orderType" | "orderStatus" | "paymentStatus" | "tableNumber" | "orderNumber" | "customerId" | "riderId" | "deliveryCharge" | "deliveryAddress" | "deliveryNotes" | "googleMapsLink" | "deliveryStatus" | "specialInstructions" | "cashierName" | "assignedAt" | "deliveredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.Order$customerArgs<ExtArgs>
   rider?: boolean | Prisma.Order$riderArgs<ExtArgs>
@@ -1897,6 +1944,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     deliveryCharge: runtime.Decimal
     deliveryAddress: string | null
     deliveryNotes: string | null
+    googleMapsLink: string | null
     deliveryStatus: $Enums.DeliveryStatus | null
     specialInstructions: string | null
     cashierName: string
@@ -2349,6 +2397,7 @@ export interface OrderFieldRefs {
   readonly deliveryCharge: Prisma.FieldRef<"Order", 'Decimal'>
   readonly deliveryAddress: Prisma.FieldRef<"Order", 'String'>
   readonly deliveryNotes: Prisma.FieldRef<"Order", 'String'>
+  readonly googleMapsLink: Prisma.FieldRef<"Order", 'String'>
   readonly deliveryStatus: Prisma.FieldRef<"Order", 'DeliveryStatus'>
   readonly specialInstructions: Prisma.FieldRef<"Order", 'String'>
   readonly cashierName: Prisma.FieldRef<"Order", 'String'>

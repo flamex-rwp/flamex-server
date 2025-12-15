@@ -125,6 +125,7 @@ export const OrderScalarFieldEnum = {
   deliveryCharge: 'deliveryCharge',
   deliveryAddress: 'deliveryAddress',
   deliveryNotes: 'deliveryNotes',
+  googleMapsLink: 'googleMapsLink',
   deliveryStatus: 'deliveryStatus',
   specialInstructions: 'specialInstructions',
   cashierName: 'cashierName',

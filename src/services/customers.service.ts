@@ -116,6 +116,7 @@ export class CustomersService {
     address: string;
     isDefault?: boolean;
     notes?: string;
+    googleMapsLink?: string;
   }) {
     const customer = await CustomersRepository.findCustomerById(customerId);
     if (!customer) {
@@ -127,7 +128,8 @@ export class CustomersService {
         customerId,
         address: data.address,
         isDefault: data.isDefault,
-        notes: data.notes
+        notes: data.notes,
+        googleMapsLink: data.googleMapsLink
       });
     } catch (error: any) {
       if (error.message === 'Address already exists for this customer') {
@@ -141,6 +143,7 @@ export class CustomersService {
     address?: string;
     isDefault?: boolean;
     notes?: string;
+    googleMapsLink?: string;
   }) {
     try {
       return await CustomersRepository.updateCustomerAddress(addressId, data);

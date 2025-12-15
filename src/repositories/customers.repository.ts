@@ -255,6 +255,7 @@ export class CustomersRepository {
     address: string;
     isDefault?: boolean;
     notes?: string;
+    googleMapsLink?: string;
   }) {
     // Check if address already exists for this customer (case-insensitive)
     const existingAddresses = await prisma.customerAddress.findMany({
@@ -283,7 +284,8 @@ export class CustomersRepository {
         customerId: data.customerId,
         address: data.address.trim(),
         isDefault: data.isDefault || false,
-        notes: data.notes
+        notes: data.notes,
+        googleMapsLink: data.googleMapsLink || null
       }
     });
   }
@@ -292,6 +294,7 @@ export class CustomersRepository {
     address?: string;
     isDefault?: boolean;
     notes?: string;
+    googleMapsLink?: string;
   }) {
     const existingAddress = await prisma.customerAddress.findUnique({
       where: { id: addressId }
@@ -337,7 +340,8 @@ export class CustomersRepository {
       data: {
         ...(data.address && { address: data.address.trim() }),
         ...(data.isDefault !== undefined && { isDefault: data.isDefault }),
-        ...(data.notes !== undefined && { notes: data.notes })
+        ...(data.notes !== undefined && { notes: data.notes }),
+        ...(data.googleMapsLink !== undefined && { googleMapsLink: data.googleMapsLink || null })
       }
     });
   }

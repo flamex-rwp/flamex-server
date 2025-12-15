@@ -123,7 +123,7 @@ export class CustomersController {
   static async createCustomerAddress(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const { address, isDefault, notes } = req.body;
+      const { address, isDefault, notes, googleMapsLink } = req.body;
 
       if (!address || !address.trim()) {
         return res.status(400).json(ApiResponse.error('Address is required'));
@@ -132,7 +132,8 @@ export class CustomersController {
       const newAddress = await CustomersService.createCustomerAddress(parseInt(id), {
         address,
         isDefault,
-        notes
+        notes,
+        googleMapsLink
       });
 
       return res.status(201).json(ApiResponse.success('Address created successfully', newAddress));
@@ -144,12 +145,13 @@ export class CustomersController {
   static async updateCustomerAddress(req: Request, res: Response, next: NextFunction) {
     try {
       const { addressId } = req.params;
-      const { address, isDefault, notes } = req.body;
+      const { address, isDefault, notes, googleMapsLink } = req.body;
 
       const updatedAddress = await CustomersService.updateCustomerAddress(parseInt(addressId), {
         address,
         isDefault,
-        notes
+        notes,
+        googleMapsLink
       });
 
       return res.json(ApiResponse.success('Address updated successfully', updatedAddress));

@@ -105,6 +105,7 @@ model Order {
   deliveryCharge      Decimal         @default(0) @map("delivery_charge") @db.Decimal(10, 2)
   deliveryAddress     String?         @map("delivery_address") @db.Text
   deliveryNotes       String?         @map("delivery_notes") @db.Text
+  googleMapsLink      String?         @map("google_maps_link") @db.VarChar(500)
   deliveryStatus      DeliveryStatus? @map("delivery_status")
   specialInstructions String?         @map("special_instructions") @db.Text
   cashierName         String          @default("Cashier") @map("cashier_name") @db.VarChar(255)
