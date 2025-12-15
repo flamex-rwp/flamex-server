@@ -34,7 +34,7 @@ export interface CreateOrderInput {
   deliveryCharge?: number;
   paymentStatus?: PaymentStatus;
   specialInstructions?: string;
-  tableNumber?: number;
+  tableNumber?: string | number;
   discountPercent?: number;
 }
 

@@ -21,7 +21,7 @@ export const createOrderSchema = z.object({
     deliveryCharge: z.number().default(0),
     paymentStatus: z.enum(['pending', 'completed']).optional(),
     specialInstructions: z.string().optional(),
-    tableNumber: z.number().int().positive().optional(),
+    tableNumber: z.union([z.string(), z.number().int().positive()]).optional(),
   }),
 });
 
@@ -39,7 +39,7 @@ export const updateOrderSchema = z.object({
     paymentStatus: z.enum(['pending', 'completed']).optional(),
     amountTaken: z.number().positive().optional().nullable(),
     returnAmount: z.number().positive().optional().nullable(),
-    tableNumber: z.number().int().positive().optional().nullable(),
+    tableNumber: z.union([z.string(), z.number().int().positive()]).optional().nullable(),
     specialInstructions: z.string().optional(),
   }),
   params: z.object({
