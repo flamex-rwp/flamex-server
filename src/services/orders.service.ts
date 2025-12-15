@@ -51,7 +51,7 @@ export class OrdersService {
       deliveryAddress,
       deliveryNotes,
       specialInstructions,
-      tableNumber,
+      tableNumber: tableNumber !== undefined && tableNumber !== null ? String(tableNumber) : null,
       cashierName: 'Cashier', // Will be updated from session
     };
 
@@ -190,7 +190,7 @@ export class OrdersService {
       deliveryNotes,
       deliveryCharge,
       specialInstructions,
-      tableNumber,
+      tableNumber: tableNumber !== undefined ? (tableNumber !== null ? String(tableNumber) : null) : undefined,
     };
 
     // Update customer if changed

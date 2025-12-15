@@ -21,7 +21,10 @@ export const createOrderSchema = z.object({
     deliveryCharge: z.number().default(0),
     paymentStatus: z.enum(['pending', 'completed']).optional(),
     specialInstructions: z.string().optional(),
-    tableNumber: z.union([z.string(), z.number().int().positive()]).optional(),
+    tableNumber: z.union([
+      z.string().min(1),
+      z.number().int().positive().transform(val => String(val))
+    ]).optional().or(z.literal('').transform(() => undefined)),
   }),
 });
 
@@ -39,7 +42,17 @@ export const updateOrderSchema = z.object({
     paymentStatus: z.enum(['pending', 'completed']).optional(),
     amountTaken: z.number().positive().optional().nullable(),
     returnAmount: z.number().positive().optional().nullable(),
-    tableNumber: z.union([z.string(), z.number().int().positive()]).optional().nullable(),
+    tableNumber: z.preprocess(
+      (val) => {
+        if (val === null || val === undefined || val === '') return null;
+        // If it's already a string (like "takeaway"), return as-is
+        if (typeof val === 'string') return val;
+        // If it's a number, convert to string for consistency
+        if (typeof val === 'number') return String(val);
+        return val;
+      },
+      z.string().nullable().optional()
+    ),
     specialInstructions: z.string().optional(),
   }),
   params: z.object({
