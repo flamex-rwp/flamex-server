@@ -10,6 +10,8 @@ export interface OrderFilter {
   page?: number;
   limit?: number;
   search?: string;
+  paymentMethod?: string;
+  sortBy?: string;
 }
 
 export interface DateRange {

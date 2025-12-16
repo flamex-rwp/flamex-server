@@ -199,6 +199,8 @@ export class OrdersRepository {
       page = 1,
       limit = 50,
       search,
+      paymentMethod,
+      sortBy,
     } = filter;
 
     const skip = (page - 1) * limit;
@@ -213,6 +215,10 @@ export class OrdersRepository {
 
     if (paymentStatus) {
       where.paymentStatus = paymentStatus;
+    }
+
+    if (paymentMethod) {
+      where.paymentMethod = paymentMethod;
     }
 
     if (orderStatus) {
@@ -339,6 +345,27 @@ export class OrdersRepository {
       })));
     }
 
+    // Determine sorting
+    let orderBy: Prisma.OrderOrderByWithRelationInput = { createdAt: 'desc' };
+    if (sortBy) {
+      switch (sortBy) {
+        case 'date_asc':
+          orderBy = { createdAt: 'asc' };
+          break;
+        case 'date_desc':
+          orderBy = { createdAt: 'desc' };
+          break;
+        case 'amount_asc':
+          orderBy = { totalAmount: 'asc' };
+          break;
+        case 'amount_desc':
+          orderBy = { totalAmount: 'desc' };
+          break;
+        default:
+          orderBy = { createdAt: 'desc' };
+      }
+    }
+
     const [orders, total] = await Promise.all([
       prisma.order.findMany({
         where,
@@ -360,12 +387,20 @@ export class OrdersRepository {
             },
           },
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy,
         skip,
         take: limit,
       }),
       prisma.order.count({ where }),
     ]);
+
+    return {
+      orders,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
 
     // Log results for debugging
     if (startDate && endDate) {
@@ -478,7 +513,16 @@ export class OrdersRepository {
   }
 
   static async getDineInStats() {
-    const [pendingOrders, completedOrders, pendingRevenue, completedRevenue] = await Promise.all([
+    const [
+      pendingOrders,
+      completedOrders,
+      pendingRevenue,
+      completedRevenue,
+      cashOrders,
+      cashRevenue,
+      bankOrders,
+      bankRevenue
+    ] = await Promise.all([
       prisma.order.count({
         where: {
           orderType: 'dine_in',
@@ -505,6 +549,42 @@ export class OrdersRepository {
         where: {
           orderType: 'dine_in',
           paymentStatus: 'completed',
+          orderStatus: { not: 'cancelled' },
+        },
+        _sum: { totalAmount: true },
+      }),
+      // Cash stats
+      prisma.order.count({
+        where: {
+          orderType: 'dine_in',
+          paymentStatus: 'completed',
+          paymentMethod: 'cash',
+          orderStatus: { not: 'cancelled' },
+        },
+      }),
+      prisma.order.aggregate({
+        where: {
+          orderType: 'dine_in',
+          paymentStatus: 'completed',
+          paymentMethod: 'cash',
+          orderStatus: { not: 'cancelled' },
+        },
+        _sum: { totalAmount: true },
+      }),
+      // Bank stats
+      prisma.order.count({
+        where: {
+          orderType: 'dine_in',
+          paymentStatus: 'completed',
+          paymentMethod: 'bank_transfer',
+          orderStatus: { not: 'cancelled' },
+        },
+      }),
+      prisma.order.aggregate({
+        where: {
+          orderType: 'dine_in',
+          paymentStatus: 'completed',
+          paymentMethod: 'bank_transfer',
           orderStatus: { not: 'cancelled' },
         },
         _sum: { totalAmount: true },
@@ -513,6 +593,8 @@ export class OrdersRepository {
 
     const pendingAmount = pendingRevenue._sum.totalAmount ? Number(pendingRevenue._sum.totalAmount.toString()) : 0;
     const completedAmount = completedRevenue._sum.totalAmount ? Number(completedRevenue._sum.totalAmount.toString()) : 0;
+    const cashAmount = cashRevenue._sum.totalAmount ? Number(cashRevenue._sum.totalAmount.toString()) : 0;
+    const bankAmount = bankRevenue._sum.totalAmount ? Number(bankRevenue._sum.totalAmount.toString()) : 0;
 
     return {
       pendingOrders,
@@ -521,6 +603,8 @@ export class OrdersRepository {
       completedRevenue: completedAmount,
       totalOrders: pendingOrders + completedOrders,
       totalRevenue: pendingAmount + completedAmount,
+      cashStats: { count: cashOrders, revenue: cashAmount },
+      bankStats: { count: bankOrders, revenue: bankAmount },
     };
   }
 

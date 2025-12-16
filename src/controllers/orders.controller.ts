@@ -82,6 +82,8 @@ export class OrdersController {
         paymentStatus: paymentStatus ? (paymentStatus as any) : undefined,
         orderStatus: orderStatus ? (orderStatus as any) : undefined,
         deliveryStatus: deliveryStatus ? (deliveryStatus as any) : undefined,
+        paymentMethod: (req.query.paymentMethod as any) || undefined,
+        sortBy: (req.query.sort_by as string) || (req.query.sortBy as string) || undefined,
         startDate: startDate as string,
         endDate: endDate as string,
         page: parseInt(page as string),
@@ -90,14 +92,14 @@ export class OrdersController {
       };
 
       const result = await OrdersService.getOrders(filter);
-      
+
       console.log('getOrders result:', {
         total: result.total,
         ordersCount: result.orders?.length || 0,
         page: result.page,
         limit: result.limit
       });
-      
+
       res.json(ApiResponse.success('Orders retrieved successfully', result));
     } catch (error) {
       next(error);
