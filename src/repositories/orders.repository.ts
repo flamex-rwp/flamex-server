@@ -435,12 +435,14 @@ export class OrdersRepository {
     };
 
     if (filter.status === 'completed') {
-      where.orderStatus = 'completed';
       where.paymentStatus = 'completed';
+      where.deliveryStatus = 'delivered';
+      // We don't strictly check orderStatus here as deliveryStatus is the final truth
     } else if (filter.status === 'pending') {
       where.OR = [
         { orderStatus: { not: 'completed' } },
         { paymentStatus: { not: 'completed' } },
+        { deliveryStatus: { not: 'delivered' } },
       ];
     }
 
