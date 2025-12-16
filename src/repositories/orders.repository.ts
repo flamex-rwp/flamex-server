@@ -228,22 +228,22 @@ export class OrdersRepository {
       // Use a more robust approach that accounts for timezone
       // Create dates in local timezone first, then they'll be properly converted
       // PostgreSQL stores timestamps in UTC, so we need to account for that
-      
+
       // Parse date components
       const [startYear, startMonth, startDay] = startDate.split('-').map(Number);
       const [endYear, endMonth, endDay] = endDate.split('-').map(Number);
-      
+
       // Create dates at start/end of day in local timezone
       // This ensures we capture the full day in the user's local timezone
       const startLocal = new Date(startYear, startMonth - 1, startDay, 0, 0, 0, 0);
       const endLocal = new Date(endYear, endMonth - 1, endDay, 23, 59, 59, 999);
-      
+
       // Convert to UTC for database comparison (PostgreSQL stores in UTC)
       // But actually, JavaScript Date objects are already in UTC internally
       // So we can use them directly
       const start = startLocal;
       const end = endLocal;
-      
+
       // Log for debugging
       console.log('Orders date filter:', {
         startDate,
@@ -255,7 +255,7 @@ export class OrdersRepository {
         timezoneOffset: new Date().getTimezoneOffset(),
         serverTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone
       });
-      
+
       where.createdAt = {
         gte: start,
         lte: end,
@@ -288,13 +288,13 @@ export class OrdersRepository {
       ...where,
       createdAt: dateFilter && typeof dateFilter === 'object' && 'gte' in dateFilter && 'lte' in dateFilter
         ? {
-            gte: dateFilter.gte instanceof Date ? dateFilter.gte.toISOString() : String(dateFilter.gte),
-            lte: dateFilter.lte instanceof Date ? dateFilter.lte.toISOString() : String(dateFilter.lte)
-          }
+          gte: dateFilter.gte instanceof Date ? dateFilter.gte.toISOString() : String(dateFilter.gte),
+          lte: dateFilter.lte instanceof Date ? dateFilter.lte.toISOString() : String(dateFilter.lte)
+        }
         : dateFilter
     };
     console.log('Orders query where clause:', JSON.stringify(whereForLog, null, 2));
-    
+
     // Also check what orders exist without date filter and compare with date range
     if (startDate && endDate && dateFilter && typeof dateFilter === 'object' && 'gte' in dateFilter && 'lte' in dateFilter) {
       const allOrdersSample = await prisma.order.findMany({
@@ -322,7 +322,7 @@ export class OrdersRepository {
           dateOnly: orderDate.toISOString().split('T')[0]
         };
       }));
-      
+
       // Also check orders within the date range directly
       const ordersInRange = await prisma.order.findMany({
         where: {
@@ -338,7 +338,7 @@ export class OrdersRepository {
         orderType: o.orderType
       })));
     }
-    
+
     const [orders, total] = await Promise.all([
       prisma.order.findMany({
         where,
@@ -366,7 +366,7 @@ export class OrdersRepository {
       }),
       prisma.order.count({ where }),
     ]);
-    
+
     // Log results for debugging
     if (startDate && endDate) {
       console.log(`Found ${orders.length} orders for date range ${startDate} to ${endDate}`);
@@ -399,9 +399,9 @@ export class OrdersRepository {
     };
 
     if (filter.status === 'completed') {
-      where.paymentStatus = 'completed';
+      where.orderStatus = 'completed';
     } else if (filter.status === 'pending') {
-      where.paymentStatus = 'pending';
+      where.orderStatus = { not: 'completed' };
     }
 
     if (filter.startDate && filter.endDate) {

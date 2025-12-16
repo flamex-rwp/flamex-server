@@ -32,8 +32,8 @@ export class OrdersService {
     const orderNumber = await OrdersRepository.getNextOrderNumber();
 
     // Calculate subtotal from items
-    const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
+    const subtotal = items.reduce((sum, item: { menuItemId: number; quantity: number; price: number }) => sum + (item.price * item.quantity), 0);
+
     // Apply discount and delivery charge to calculate final total
     const discountAmount = subtotal * (discountPercent / 100);
     const finalTotalAmount = (subtotal - discountAmount) + (deliveryCharge || 0);
@@ -94,7 +94,7 @@ export class OrdersService {
       const existingMenuItems = await OrdersRepository.validateMenuItems(menuItemIds);
 
       if (existingMenuItems.length !== menuItemIds.length) {
-        const foundIds = existingMenuItems.map(item => item.id);
+        const foundIds = existingMenuItems.map((item: { id: number }) => item.id);
         const missingIds = menuItemIds.filter(id => !foundIds.includes(id));
         throw new ApiError(400, `Menu items not found: ${missingIds.join(', ')}`);
       }
@@ -151,7 +151,7 @@ export class OrdersService {
       const existingMenuItems = await OrdersRepository.validateMenuItems(menuItemIds);
 
       if (existingMenuItems.length !== menuItemIds.length) {
-        const foundIds = existingMenuItems.map(item => item.id);
+        const foundIds = existingMenuItems.map((item: { id: number }) => item.id);
         const missingIds = menuItemIds.filter(id => !foundIds.includes(id));
         throw new ApiError(400, `Menu items not found: ${missingIds.join(', ')}`);
       }
@@ -170,7 +170,7 @@ export class OrdersService {
           id: item.id,
           menuItemId: item.menuItemId,
           quantity: item.quantity,
-          price: item.price,
+          price: Number(item.price), // Convert Decimal to number
         })),
       ),
       newTotalAmount: totalAmount,
@@ -281,16 +281,27 @@ export class OrdersService {
       paymentStatus: 'completed',
     };
 
+    // Only auto-complete Dine-in orders on payment
+    // Delivery orders should remain active until delivered
+    if (order.orderType === 'dine_in') {
+      updateData.orderStatus = 'completed';
+    }
+
     if (data.paymentMethod === 'cash') {
       if (!data.amountTaken) {
         throw new ApiError(400, 'Amount taken is required for cash payments');
       }
-      // Allow partial payments - if amountTaken is less than total, returnAmount will be negative
       updateData.amountTaken = data.amountTaken;
-      // Calculate returnAmount: positive if change given, negative if amount is less than total
-      updateData.returnAmount = data.returnAmount !== undefined 
-        ? data.returnAmount 
-        : data.amountTaken - Number(order.totalAmount);
+      // ALWAYS calculate returnAmount on backend for accuracy
+      // Positive = change to return to customer
+      // Negative = amount still owed to restaurant (partial payment)
+      const returnAmount = data.amountTaken - Number(order.totalAmount);
+      updateData.returnAmount = returnAmount;
+
+      // If partial payment (negative returnAmount), update totalAmount to what was actually paid
+      if (returnAmount < 0) {
+        updateData.totalAmount = data.amountTaken;
+      }
     } else {
       updateData.amountTaken = null;
       updateData.returnAmount = null;
