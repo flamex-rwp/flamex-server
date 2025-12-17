@@ -7,7 +7,7 @@ export const parseDateRange = (start?: string, end?: string): DateRange => {
   const now = new Date();
   const defaultEnd = new Date(now);
   defaultEnd.setHours(23, 59, 59, 999);
-  
+
   const defaultStart = new Date(now);
   defaultStart.setDate(defaultStart.getDate() - 30);
   defaultStart.setHours(0, 0, 0, 0);
@@ -19,11 +19,20 @@ export const parseDateRange = (start?: string, end?: string): DateRange => {
     throw new Error('Invalid date range');
   }
 
+  // Adjust for Timezone (PKT = UTC+5)
+  // When parsing a date string "YYYY-MM-DD", it defaults to UTC midnight.
+  // We want "YYYY-MM-DD 00:00 PKT", which is "YYYY-MM-DD MINUS 1 DAY 19:00 UTC".
+  // So we subtract 5 hours from the UTC midnight/end-of-day timestamps.
+
+  const TIMEZONE_OFFSET_HOURS = 5;
+
   const normalizedStart = new Date(startDate);
   normalizedStart.setHours(0, 0, 0, 0);
-  
+  normalizedStart.setHours(normalizedStart.getHours() - TIMEZONE_OFFSET_HOURS);
+
   const normalizedEnd = new Date(endDate);
   normalizedEnd.setHours(23, 59, 59, 999);
+  normalizedEnd.setHours(normalizedEnd.getHours() - TIMEZONE_OFFSET_HOURS);
 
   return { startDate: normalizedStart, endDate: normalizedEnd };
 };
@@ -32,23 +41,23 @@ export const getTodayRange = (): DateRange => {
   const today = new Date();
   const startDate = new Date(today);
   startDate.setHours(0, 0, 0, 0);
-  
+
   const endDate = new Date(today);
   endDate.setHours(23, 59, 59, 999);
-  
+
   return { startDate, endDate };
 };
 
 export const getYesterdayRange = (): DateRange => {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  
+
   const startDate = new Date(yesterday);
   startDate.setHours(0, 0, 0, 0);
-  
+
   const endDate = new Date(yesterday);
   endDate.setHours(23, 59, 59, 999);
-  
+
   return { startDate, endDate };
 };
 
@@ -58,10 +67,10 @@ export const getThisWeekRange = (): DateRange => {
   const startDate = new Date(today);
   startDate.setDate(today.getDate() - dayOfWeek);
   startDate.setHours(0, 0, 0, 0);
-  
+
   const endDate = new Date(today);
   endDate.setHours(23, 59, 59, 999);
-  
+
   return { startDate, endDate };
 };
 
@@ -69,9 +78,9 @@ export const getThisMonthRange = (): DateRange => {
   const today = new Date();
   const startDate = new Date(today.getFullYear(), today.getMonth(), 1);
   startDate.setHours(0, 0, 0, 0);
-  
+
   const endDate = new Date(today);
   endDate.setHours(23, 59, 59, 999);
-  
+
   return { startDate, endDate };
 };
