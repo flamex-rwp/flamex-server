@@ -235,20 +235,19 @@ export class OrdersRepository {
       // Create dates in local timezone first, then they'll be properly converted
       // PostgreSQL stores timestamps in UTC, so we need to account for that
 
-      // Parse date components
-      const [startYear, startMonth, startDay] = startDate.split('-').map(Number);
-      const [endYear, endMonth, endDay] = endDate.split('-').map(Number);
+      // Use dates directly if they are already Date objects (handled by controller/service)
+      // or parse them if they are strings
+      const start = new Date(startDate);
+      const end = new Date(endDate);
 
-      // Create dates at start/end of day in local timezone
-      // This ensures we capture the full day in the user's local timezone
-      const startLocal = new Date(startYear, startMonth - 1, startDay, 0, 0, 0, 0);
-      const endLocal = new Date(endYear, endMonth - 1, endDay, 23, 59, 59, 999);
-
-      // Convert to UTC for database comparison (PostgreSQL stores in UTC)
-      // But actually, JavaScript Date objects are already in UTC internally
-      // So we can use them directly
-      const start = startLocal;
-      const end = endLocal;
+      // Validate dates
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+        console.error('Invalid date params:', { startDate, endDate });
+        // Fallback to today if invalid
+        const today = new Date();
+        start.setTime(today.setHours(0, 0, 0, 0));
+        end.setTime(today.setHours(23, 59, 59, 999));
+      }
 
       // Log for debugging
       console.log('Orders date filter:', {

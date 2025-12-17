@@ -2,7 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { OrdersService } from '../services/orders.service';
 import ApiResponse from '../common/api-response';
 import ApiError from '../common/errors/ApiError';
-import { parseDateRange } from '../utils/date.utils';
+import {
+  parseDateRange,
+  getTodayRange,
+  getYesterdayRange,
+  getThisWeekRange,
+  getThisMonthRange
+} from '../utils/date.utils';
 
 export class OrdersController {
   static async createOrder(req: Request, res: Response, next: NextFunction) {
@@ -57,8 +63,8 @@ export class OrdersController {
         paymentStatus,
         orderStatus,
         deliveryStatus,
-        startDate,
-        endDate,
+        startDate: qsStartDate,
+        endDate: qsEndDate,
         page = '1',
         limit = '50',
         search,
@@ -70,12 +76,43 @@ export class OrdersController {
         paymentStatus,
         orderStatus,
         deliveryStatus,
-        startDate,
-        endDate,
+        startDate: qsStartDate,
+        endDate: qsEndDate,
         page,
         limit,
         search
       });
+
+      let startDate = qsStartDate as string;
+      let endDate = qsEndDate as string;
+      const { filter: dateFilterProp } = req.query;
+
+      // Handle date filters
+      if (dateFilterProp) {
+        let dateRange;
+        switch (dateFilterProp) {
+          case 'today':
+            dateRange = getTodayRange();
+            break;
+          case 'yesterday':
+            dateRange = getYesterdayRange();
+            break;
+          case 'this_week':
+            dateRange = getThisWeekRange();
+            break;
+          case 'this_month':
+            dateRange = getThisMonthRange();
+            break;
+          case 'custom':
+            // For custom, we expect startDate and endDate to be provided in query
+            break;
+        }
+
+        if (dateRange) {
+          startDate = dateRange.startDate.toISOString();
+          endDate = dateRange.endDate.toISOString();
+        }
+      }
 
       const filter = {
         orderType: orderType ? (orderType as any) : undefined,
