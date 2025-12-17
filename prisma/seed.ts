@@ -186,7 +186,7 @@ async function main() {
       orderType: "dine_in",
       orderStatus: "completed",
       paymentStatus: "completed",
-      tableNumber: 1,
+      tableNumber: "1",
       orderNumber: 1001,
       cashierName: "Cashier",
       createdAt: yesterday,
