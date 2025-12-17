@@ -261,11 +261,13 @@ export class OrdersController {
 
       let dateRange;
       if (filter === 'today') {
-        const today = new Date();
-        dateRange = {
-          startDate: new Date(today.setHours(0, 0, 0, 0)),
-          endDate: new Date(today.setHours(23, 59, 59, 999)),
-        };
+        dateRange = getTodayRange();
+      } else if (filter === 'yesterday') {
+        dateRange = getYesterdayRange();
+      } else if (filter === 'this_week') {
+        dateRange = getThisWeekRange();
+      } else if (filter === 'this_month') {
+        dateRange = getThisMonthRange();
       } else {
         dateRange = parseDateRange(start as string, end as string);
       }
