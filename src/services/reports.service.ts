@@ -873,6 +873,7 @@ export class ReportsService {
         const orders = await prisma.order.findMany({
             where: {
                 orderType: 'delivery',
+                orderStatus: { not: 'cancelled' },
                 createdAt: { gte: range.startDate, lte: range.endDate },
             },
             include: {
@@ -891,11 +892,21 @@ export class ReportsService {
         const cancelledOrders = orders.filter(o => o.deliveryStatus === 'cancelled').length;
 
         // Payment breakdown
-        const cashOrders = orders.filter(o => o.paymentMethod === 'cash' && o.paymentStatus === 'completed');
-        const bankOrders = orders.filter(o => o.paymentMethod === 'bank_transfer' && o.paymentStatus === 'completed');
-        const codPendingOrders = orders.filter(o => o.paymentMethod === 'cash' && o.paymentStatus === 'pending');
+        // Payment breakdown - Case insensitive check
+        const cashOrders = orders.filter(o =>
+            (o.paymentMethod?.toLowerCase() === 'cash') &&
+            o.paymentStatus === 'completed'
+        );
+        const bankOrders = orders.filter(o =>
+            (o.paymentMethod?.toLowerCase() === 'bank_transfer' || o.paymentMethod?.toLowerCase() === 'bank') &&
+            o.paymentStatus === 'completed'
+        );
+        const codPendingOrders = orders.filter(o =>
+            (o.paymentMethod?.toLowerCase() === 'cash') &&
+            o.paymentStatus === 'pending'
+        );
         const codReceivedOrders = orders.filter(o =>
-            o.paymentMethod === 'cash' &&
+            (o.paymentMethod?.toLowerCase() === 'cash') &&
             o.paymentStatus === 'completed' &&
             o.deliveryStatus === 'delivered'
         );
