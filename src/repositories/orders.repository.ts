@@ -607,11 +607,18 @@ export class OrdersRepository {
     };
   }
 
-  static async getDeliveryStats() {
+  static async getDeliveryStats(range?: DateRange) {
     const commonWhere: Prisma.OrderWhereInput = {
       orderType: 'delivery',
       orderStatus: { not: 'cancelled' },
     };
+
+    if (range) {
+      commonWhere.createdAt = {
+        gte: range.startDate,
+        lte: range.endDate,
+      };
+    }
 
     const [
       pendingPayments,

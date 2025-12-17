@@ -1048,9 +1048,32 @@ export class ReportsService {
             paymentStatus: order.paymentStatus,
         }));
 
+        const [pendingTotal, collectedTotal] = await Promise.all([
+            prisma.order.aggregate({
+                where: {
+                    orderType: 'delivery',
+                    paymentMethod: 'cash',
+                    paymentStatus: 'pending',
+                    createdAt: { gte: range.startDate, lte: range.endDate },
+                },
+                _sum: { totalAmount: true },
+            }),
+            prisma.order.aggregate({
+                where: {
+                    orderType: 'delivery',
+                    paymentMethod: 'cash',
+                    paymentStatus: 'completed',
+                    createdAt: { gte: range.startDate, lte: range.endDate },
+                },
+                _sum: { totalAmount: true },
+            }),
+        ]);
+
         const totals = {
             count: codOrders.length,
             amount: codOrders.reduce((sum, o) => sum + o.totalAmount, 0),
+            pendingAmount: pendingTotal._sum.totalAmount ? Number(pendingTotal._sum.totalAmount) : 0,
+            collectedAmount: collectedTotal._sum.totalAmount ? Number(collectedTotal._sum.totalAmount) : 0,
         };
 
         return { orders: codOrders, totals };

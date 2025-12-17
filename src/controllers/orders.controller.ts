@@ -170,7 +170,25 @@ export class OrdersController {
 
   static async getDeliveryStats(req: Request, res: Response, next: NextFunction) {
     try {
-      const stats = await OrdersService.getDeliveryStats();
+      const { start, end, filter } = req.query;
+      let dateRange;
+
+      if (filter === 'today') {
+        dateRange = getTodayRange();
+      } else if (filter === 'yesterday') {
+        dateRange = getYesterdayRange();
+      } else if (filter === 'this_week') {
+        dateRange = getThisWeekRange();
+      } else if (filter === 'this_month') {
+        dateRange = getThisMonthRange();
+      } else if (start || end) {
+        dateRange = parseDateRange(start as string, end as string);
+      } else {
+        // Default to today if no filter is provided, consistent with frontend default
+        dateRange = getTodayRange();
+      }
+
+      const stats = await OrdersService.getDeliveryStats(dateRange);
       res.json(ApiResponse.success('Delivery stats retrieved successfully', stats));
     } catch (error) {
       next(error);

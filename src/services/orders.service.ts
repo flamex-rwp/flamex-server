@@ -243,8 +243,8 @@ export class OrdersService {
     return await OrdersRepository.getDineInStats();
   }
 
-  static async getDeliveryStats() {
-    return await OrdersRepository.getDeliveryStats();
+  static async getDeliveryStats(range?: DateRange) {
+    return await OrdersRepository.getDeliveryStats(range);
   }
 
   static async getDeliveryOrders(filter: {
