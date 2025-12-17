@@ -3,6 +3,7 @@ import { Prisma, OrderStatus, DeliveryStatus } from '../generated/prisma/client'
 import prisma from '../prismaClient'
 import ApiError from '../common/errors/ApiError';
 import { OrderFilter, DateRange } from '../types';
+import { parseDateRange } from '../utils/date.utils';
 
 export class OrdersRepository {
   static async createOrder(data: Prisma.OrderCreateInput) {
@@ -231,22 +232,32 @@ export class OrdersRepository {
 
     if (startDate && endDate) {
       // Parse dates and set proper time boundaries
-      // Use a more robust approach that accounts for timezone
-      // Create dates in local timezone first, then they'll be properly converted
-      // PostgreSQL stores timestamps in UTC, so we need to account for that
+      // Check if dates are already ISO strings (from controller's getTodayRange/etc) or simple YYYY-MM-DD
+      const isIsoStart = typeof startDate === 'string' && startDate.includes('T');
+      const isIsoEnd = typeof endDate === 'string' && endDate.includes('T');
 
-      // Use dates directly if they are already Date objects (handled by controller/service)
-      // or parse them if they are strings
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      let start: Date;
+      let end: Date;
+
+      if (isIsoStart && isIsoEnd) {
+        // Already precise timestamps (e.g. from getTodayRange which is PKT-adjusted UTC)
+        start = new Date(startDate);
+        end = new Date(endDate);
+      } else {
+        // Simple date strings (YYYY-MM-DD) -> Use parseDateRange to apply PKT offset and set EOD
+        // This handles the "Sales Summary" case where frontend sends YYYY-MM-DD
+        const range = parseDateRange(startDate as string, endDate as string);
+        start = range.startDate;
+        end = range.endDate;
+      }
 
       // Validate dates
       if (isNaN(start.getTime()) || isNaN(end.getTime())) {
         console.error('Invalid date params:', { startDate, endDate });
-        // Fallback to today if invalid
-        const today = new Date();
-        start.setTime(today.setHours(0, 0, 0, 0));
-        end.setTime(today.setHours(23, 59, 59, 999));
+        // Fallback to today (PKT)
+        const range = parseDateRange();
+        start = range.startDate;
+        end = range.endDate;
       }
 
       // Log for debugging
@@ -439,9 +450,27 @@ export class OrdersRepository {
     }
 
     if (filter.startDate && filter.endDate) {
+      // Logic for dine-in orders - assuming raw Date objects or strings
+      // If we receive plain Date objects or ISO strings, we use them.
+      // But typically these filters might come from query params as YYYY-MM-DD strings too.
+      let start: Date;
+      let end: Date;
+
+      const startDateStr = filter.startDate instanceof Date ? filter.startDate.toISOString() : String(filter.startDate);
+      const endDateStr = filter.endDate instanceof Date ? filter.endDate.toISOString() : String(filter.endDate);
+
+      if (startDateStr.includes('T')) {
+        start = new Date(startDateStr);
+        end = new Date(endDateStr);
+      } else {
+        const range = parseDateRange(startDateStr, endDateStr);
+        start = range.startDate;
+        end = range.endDate;
+      }
+
       where.createdAt = {
-        gte: filter.startDate,
-        lte: filter.endDate,
+        gte: start,
+        lte: end,
       };
     }
 
@@ -481,9 +510,24 @@ export class OrdersRepository {
     }
 
     if (filter.startDate && filter.endDate) {
+      let start: Date;
+      let end: Date;
+
+      const startDateStr = filter.startDate instanceof Date ? filter.startDate.toISOString() : String(filter.startDate);
+      const endDateStr = filter.endDate instanceof Date ? filter.endDate.toISOString() : String(filter.endDate);
+
+      if (startDateStr.includes('T')) {
+        start = new Date(startDateStr);
+        end = new Date(endDateStr);
+      } else {
+        const range = parseDateRange(startDateStr, endDateStr);
+        start = range.startDate;
+        end = range.endDate;
+      }
+
       where.createdAt = {
-        gte: filter.startDate,
-        lte: filter.endDate,
+        gte: start,
+        lte: end,
       };
     }
 
