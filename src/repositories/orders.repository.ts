@@ -564,7 +564,8 @@ export class OrdersRepository {
       cashOrders,
       cashRevenue,
       bankOrders,
-      bankRevenue
+      bankRevenue,
+      activeOrders
     ] = await Promise.all([
       prisma.order.count({
         where: {
@@ -632,6 +633,13 @@ export class OrdersRepository {
         },
         _sum: { totalAmount: true },
       }),
+      // Active orders (not completed, not cancelled)
+      prisma.order.count({
+        where: {
+          orderType: 'dine_in',
+          orderStatus: { notIn: ['completed', 'cancelled'] },
+        },
+      }),
     ]);
 
     const pendingAmount = pendingRevenue._sum.totalAmount ? Number(pendingRevenue._sum.totalAmount.toString()) : 0;
@@ -641,6 +649,7 @@ export class OrdersRepository {
 
     return {
       pendingOrders,
+      activeOrders,
       completedOrders,
       pendingRevenue: pendingAmount,
       completedRevenue: completedAmount,
