@@ -217,33 +217,13 @@ export class OrdersController {
 
       let dateRange;
       if (filter === 'today') {
-        const today = new Date();
-        dateRange = {
-          startDate: new Date(today.setHours(0, 0, 0, 0)),
-          endDate: new Date(today.setHours(23, 59, 59, 999)),
-        };
+        dateRange = getTodayRange();
       } else if (filter === 'yesterday') {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        dateRange = {
-          startDate: new Date(yesterday.setHours(0, 0, 0, 0)),
-          endDate: new Date(yesterday.setHours(23, 59, 59, 999)),
-        };
+        dateRange = getYesterdayRange();
       } else if (filter === 'this_week') {
-        const today = new Date();
-        const weekStart = new Date(today);
-        weekStart.setDate(today.getDate() - today.getDay());
-        dateRange = {
-          startDate: new Date(weekStart.setHours(0, 0, 0, 0)),
-          endDate: new Date(today.setHours(23, 59, 59, 999)),
-        };
+        dateRange = getThisWeekRange();
       } else if (filter === 'this_month') {
-        const today = new Date();
-        const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-        dateRange = {
-          startDate: new Date(monthStart.setHours(0, 0, 0, 0)),
-          endDate: new Date(today.setHours(23, 59, 59, 999)),
-        };
+        dateRange = getThisMonthRange();
       } else {
         dateRange = parseDateRange(start as string, end as string);
       }
